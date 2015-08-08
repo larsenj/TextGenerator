@@ -1,18 +1,31 @@
+/*
+ *  Markov.java
+ *  Jon Larsen
+ *  Generates and initializes the hashmap for the seed text. Also generates the
+ *  random text based on the seed text.
+ */
+
 import java.io.*;
 import java.util.*;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;;
+import java.util.regex.Pattern;
 
 public class Markov{
 
-    private Map<WordNSeed, ArrayList<String>> originText = new HashMap<WordNSeed, ArrayList<String>>();
-    private List<WordNSeed> seedKeys;//stores all keys
-    private int seedNum;
+    private Map<WordNSeed, ArrayList<String>> originText = 
+        new HashMap<WordNSeed, ArrayList<String>>(); //stores the seed text
+    private List<WordNSeed> seedKeys; //stores all keys
+    private int seedNum; //number of words to use for WordNSeed
 
     public Markov(){
-       Random rand = new Random(1234);
+       //Random rand = new Random(1234);
        seedNum = 2;
     }//end defalt constructor
+   
+    //constructor that allows different seed sizes
+    public Markov(int n){
+       seedNum = n;
+    }//end constructor
    
     //Function will take given file name, read it, and add all words to the 
     //hashmap in the key, value form of WordNSeed, ArrayList<String> 
@@ -58,6 +71,7 @@ public class Markov{
         originText.get(n).add(s);
     }//end addItem
 
+    //returns the list of values associated with a given key
     public ArrayList<String> getValue(WordNSeed n){
         if(originText.get(n) == null){
             System.out.println("Seed does not exist");
@@ -81,8 +95,7 @@ public class Markov{
         WordNSeed seed = getInitial();
 
         //create a regex
-        Pattern punctSearch = Pattern.compile
-            (".*[.?!]$");
+        Pattern punctSearch = Pattern.compile(".*[.?!]$");
 
         Random r = new Random();
         //boolean endSentence = false;
@@ -94,7 +107,6 @@ public class Markov{
         seed.printSeed();
         
         do{
-            //count++;
             //endSentence = false;
 
             //ensure key has a valid ArrayList
@@ -113,19 +125,17 @@ public class Markov{
                 count++;
             }
 
-            //System.out.println("Size is " + values.size() + ", rand is " + rand);
-
             //print word out
             System.out.print(newStr + " ");    
 
-            //use word to generate new seed. Default seed size is 2.
+            //use word to generate new seed.
             seed = seed.newSeed(newStr); 
 
         } while (count < size);
 
     }//end generateText()
 
-    //helper function to start off generateText()
+    //helper function to start off generateText() with an initial seed
     public WordNSeed getInitial(){
         Random r = new Random();
         boolean isCap = false;
@@ -140,11 +150,5 @@ public class Markov{
         }while(!isCap);
         return s;
     }//end getInitial()
-
-
-
-
-
-
 
 }//end Markov class

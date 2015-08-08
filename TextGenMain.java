@@ -1,3 +1,16 @@
+/*
+ *  TextGenMain.java
+ *  Jon Larsen
+ *  This program take a text file as a commandline parameter. It then prompts
+ *  the user for how large a seed to use and how many sentences of random text 
+ *  to generate using that text file as the seed. This runs in a loop, prompting
+ *  the user until input that doesn't being with a 'y', case-insensitive, is
+ *  given.
+ *
+ */
+
+
+
 import java.util.*;
 
 class TextGenMain{
@@ -8,10 +21,18 @@ class TextGenMain{
             System.exit(1);
         }
 
-        Markov mv = new Markov();
+        Scanner keyboard = new Scanner(System.in);
+        int seedSize;
+
+        System.out.print("Size of seed to use? (default is 2) ");
+        seedSize = keyboard.nextInt();
+        
+        if (seedSize < 1)
+            seedSize = 2;
+        
+        Markov mv = new Markov(seedSize);
         mv.initialize(args[0]);
 
-        Scanner keyboard = new Scanner(System.in);
         int sentences;
         String goAgain;
 
@@ -24,6 +45,12 @@ class TextGenMain{
         System.out.print("\nGo again? (Y/N) ");
         goAgain = keyboard.next();
         } while(goAgain.toUpperCase().charAt(0) == 'Y');
+        
+        System.out.println();
+    }//end main
+}//end TextGenMain
+        
+        
         //all the testing code is below      
 
 /*
@@ -56,18 +83,6 @@ class TextGenMain{
         //mv.printMap();        
 */        
 
-
-        System.out.println();
-
-
-
-
-
-
-
-
-
-
 /*
         String[] test = {"a", "b"};
         WordNSeed n = new WordNSeed(test, 0, 2);
@@ -96,5 +111,3 @@ class TextGenMain{
         System.out.println(eq);
 */
 
-    }//end main
-}//end TextGenMain

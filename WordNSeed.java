@@ -1,3 +1,10 @@
+/*
+ * WordNSeed.java
+ * Jon Larsen
+ * This class hold N number of words in an array. It is used as the key for the
+ * hashmap in Markov.java.
+ */
+
 import java.util.*;
 
 public class WordNSeed implements Comparable<WordNSeed>{
@@ -7,9 +14,7 @@ public class WordNSeed implements Comparable<WordNSeed>{
     //Store n words from input String[] as the N words of the seed.
     //The index "start" will be the 1st word.
     public WordNSeed(String[] list, int start, int n){
-    //public WordNSeed(ArrayList<String> list, int start, int n){
         myWords = new String[n];
-        //list.subList(start, n-1).toArray(myWords);
 
         //arraycopy(Object src, int srcPos, Object dest, int destPos, int length)
         System.arraycopy(list, start, myWords, 0, n);
@@ -71,6 +76,4 @@ public class WordNSeed implements Comparable<WordNSeed>{
         temp[size-1] = str;
         return new WordNSeed(temp, 0, size);
     }//end newSeed
-
-
 }//end class WordSeed
